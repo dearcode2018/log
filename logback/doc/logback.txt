@@ -1,0 +1,45 @@
+logback
+
+logback是slf4j-api的一个实现，在一个项目中要去掉slf4j的其他实现logback才能起作用.
+
+1.模块
+logback-core 基础模块
+logback-classic log4j的改良版本，同时它完整实现了slf4j API
+logback-access 访问模块与servlet容器集成提供通过http来访问日志的功能
+
+2.配置
+在classpath下查找logback-test.xml --> logback.xml
+如果都找不到logback用BasicConfigurator自动进行配置，这样会导致记录输出到控制台.
+
+
+3.级别
+日志级别: TRACE DEBUG INFO WARN ERROR
+定义在 ch.qos.logback.classic.Level
+logger如果没有被分配级别，那么它将从被分配级别最近的祖先那里继承.
+root logger默认级别是DEBUG
+<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

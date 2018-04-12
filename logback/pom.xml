@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.hua</groupId>
+		<artifactId>log-entire</artifactId>
+		<version>0.0.1</version>
+	</parent>	
+	<artifactId>logback</artifactId>
+	<packaging>jar</packaging>
+	<name>logback</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<log.version>0.0.1</log.version>
+		<logback.version>1.2.3</logback.version>		
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.hua</groupId>
+			<artifactId>log</artifactId>
+			<version>${log.version}</version>
+			<!-- 当前项目需要用logback的实现，所以需要把log4j的实现给去掉 -->
+			<exclusions>
+				<exclusion>
+    				<groupId>org.slf4j</groupId>	
+ 					<artifactId>slf4j-log4j12</artifactId>    								
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>${logback.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-core</artifactId>
+		    <version>${logback.version}</version>
+		</dependency>
+	
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-access</artifactId>
+	    <version>${logback.version}</version>
+	</dependency>	
+		
+	</dependencies>
+
+</project>

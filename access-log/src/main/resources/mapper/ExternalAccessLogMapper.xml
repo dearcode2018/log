@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hua.mapper.ExternalAccessLogMapper">
+
+  <sql id="tableName">T_EXTERNAL_ACCESS_LOG</sql>
+
+	<!-- 插入单个对象 -->
+	<insert id="insert" parameterType="externalAccessLogEntity">
+		INSERT INTO <include refid="tableName" /> (BUSINESS_ID, ACCESS_CODE, REQUEST_PARAM, RESPONSE_RESULT, REQUEST_ADDR, ENDURE_SECOND, REMARK) 
+		VALUES (#{businessId, jdbcType=VARCHAR}, #{accessCode, jdbcType=VARCHAR}, 
+		#{requestParam, jdbcType=CLOB}, #{responseResult, jdbcType=CLOB}, 
+		#{requestAddr, jdbcType=VARCHAR}, #{endureSecond, jdbcType=NUMERIC}, 
+		#{remark, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update" parameterType="externalAccessLogEntity">
+		UPDATE <include refid="tableName" /> SET
+		<trim prefixOverrides=",">
+			<if test="null != responseResult">RESPONSE_RESULT = #{responseResult, jdbcType=CLOB}</if>
+			<if test="null != endureSecond">,ENDURE_SECOND = #{endureSecond, jdbcType=NUMERIC}</if>
+			<if test="null != remark">,REMARK = #{remark, jdbcType=VARCHAR}</if>		
+		</trim>		
+		WHERE BUSINESS_ID = #{businessId, jdbcType=VARCHAR}
+	</update>
+
+	
+</mapper>
