@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- scan=true设置文件发生改变将会自动加载
+scanPeriod设置监测配置文件是否有修改的时间间隔，若没有给出单位则默认为毫秒，当scan=true时，此属性生效，
+默认为一分钟.
+debug=true设置打印logback内部日志信息,实时查看logback运行状态，默认为false
+
+ -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+	<!-- 声明属性，可以被后面的logger上下通过${}引用变量 -->
+	<property name="" value="" />
+	
+	<!-- 获取时间戳字符串 key:设置此时间戳的名称，datePattern: 设置当前日期字符串的格式 -->
+	<timestamp key="df_yyyy_MM_dd"  datePattern="yyyy-MM-dd" />
+	<timestamp key="df_yyyyMMdd"  datePattern="yyyyMMdd'T'HHmmss" />
+		
+	<!-- 上下文名称，默认为default，每个logger都关联到logger上下文 -->
+	<contextName>logback_00_</contextName>
+	
+	<!-- 0-多个，该组件负责写日志, name:指定appender的名称，class指定appender的全限定名 -->
+	<appender name="stdOut" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 日志格式化 -->
+		<encoder>
+			%-4relative [%thread] %-5level %logger{35} -%msg %n
+		</encoder>
+		<!-- System.out(默认) 或 System.err -->
+		<target>System.err</target>		
+	</appender>
+
+	<!-- 0-多个，该组件负责写日志, name:指定appender的名称，class指定appender的全限定名 -->
+	<appender name="file" class="ch.qos.logback.core.FileAppender">
+		<!-- 被写入的文件，绝对路径或相对路径 -->
+		<file>/data/log/logback_1.txt</file>
+		<!-- true-追加到文件末尾，false-清空现存文件 ，默认是true -->
+		<append>true</append>
+		<!-- 日志格式化 -->
+		<encoder>
+			%-4relative [%thread] %-5level %logger{35} -%msg %n
+		</encoder>	
+	</appender>
+
+	<!-- 0-多个，该组件负责写日志, name:指定appender的名称，class指定appender的全限定名
+	滚动记录文件: 先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件.
+	 -->
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 被写入的文件，绝对路径或相对路径 -->
+		<file>/data/log/logback_1.txt</file>
+		<!-- true-追加到文件末尾，false-清空现存文件 ，默认是true -->
+		<append>true</append>
+		<!-- 当发生滚动时,决定RollingFileAppender的行为，涉及文件移动和重命名，由class来指定规则 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 文件名规则 -->
+			<fileNamePattern>logfile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- 保留的归档文件最大数量，超过则删除旧文件 -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<!-- 日志格式化 -->
+		<encoder>
+			%-4relative [%thread] %-5level %logger{35} -%msg %n
+		</encoder>	
+	</appender>
+
+		<!-- 最多一个，root是所有logger上级 -->
+		<root level="DEBUG">
+			<appender-ref ref="stdOut" />
+		</root>	
+
+	<!-- 0-多个
+		name设置某一个包或具体类的日志打印级别 以及指定appender
+		level设置级别  ch.qos.logback.classic.Level
+		TRACE DEBUG INFO WARN ERROR ALL OFF
+		addtivity设置是否向上级logger传递打印信息，默认是true
+	 -->
+	<logger name="com.hua" level="INFO" addtivity="true">
+		<appender-ref ref="stdOut" />
+	</logger>	
+	
+
+</configuration>
