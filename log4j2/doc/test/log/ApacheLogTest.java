@@ -6,13 +6,13 @@
  */
 package com.hua.test.log;
 
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
 import org.junit.Test;
 
 import com.hua.log.apache.ApacheBaseLog;
 import com.hua.log.apache.ApacheLog;
 import com.hua.test.BaseTest;
-import com.hua.util.LogUtil;
+import com.hua.util.log.LogUtil;
 
 /**
  * 描述: 
@@ -24,7 +24,7 @@ public class ApacheLogTest extends BaseTest {
 	public static ApacheLog apacheLog = new ApacheLog();
 	
 	/* apache commons log */
-	public static Logger log = apacheLog.log;
+	public static Log log = apacheLog.log;
 	
 	static {
 		// 使用指定的配置启动 log

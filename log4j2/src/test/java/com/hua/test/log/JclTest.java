@@ -1,37 +1,39 @@
 /**
-* ApacheLogTest.java
+* JclTest.java
 * 
 * @author qye.zheng
 * 	version 1.0
  */
 package com.hua.test.log;
 
-import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
-import com.hua.log.apache.ApacheBaseLog;
-import com.hua.log.apache.ApacheLog;
 import com.hua.test.BaseTest;
-import com.hua.util.LogUtil;
+import com.sun.corba.se.impl.orb.ParserTable.TestAcceptor1;
 
 /**
  * 描述: 
  * @author qye.zheng
- * ApacheLogTest
+ * JclTest
  */
-public class ApacheLogTest extends BaseTest {
+public class JclTest extends BaseTest {
 	
-	public static ApacheLog apacheLog = new ApacheLog();
-	
-	/* apache commons log */
-	public static Logger log = apacheLog.log;
-	
-	static {
-		// 使用指定的配置启动 log
-		LogUtil.log4jInitByProperties(ApacheBaseLog.propertiesPath);
-		//LogUtil.log4jInitByDefault();
+	/**
+	 * 
+	 * 描述: 
+	 * @author qye.zheng
+	 * 
+	 */
+	@Test
+	public void testLog() {
+		try {
+			
+			log.info("testLog =====> jcl logging success!");
+			
+		} catch (Exception e) {
+			log.error("testLog =====> ", e);
+		}
 	}
-	
 	
 	/**
 	 * 
@@ -43,6 +45,7 @@ public class ApacheLogTest extends BaseTest {
 	public void testTemp() {
 		try {
 			
+			//System.out.println(TestA);
 			
 		} catch (Exception e) {
 			log.error("testTemp=====> ", e);

@@ -6,8 +6,8 @@
  */
 package com.hua.log.apache;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /**
  * 描述: apache commons logging for java
  * @author qye.zheng
@@ -22,7 +22,7 @@ public class ApacheBaseLog {
 	public static final String xmlPath = "/conf/apache/";
 	
 	/* apache commons log */
-	public Log log = LogFactory.getLog(this.getClass().getName());
+	public final Logger log = LogManager.getLogger(this.getClass().getName());
 	
 	
 }

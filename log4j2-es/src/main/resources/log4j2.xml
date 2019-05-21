@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.wehotel.uni.user">
+    <properties>
+        <property name="LOG_HOME">/data/logs/cache/log4j2-es</property>
+        <property name="FILE_NAME">log4j2-es</property>
+        <property name="APP_NAME">log4j2-es</property>
+
+        <property name="CONSOLE_LOG_PATTERN"
+                  value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} [T=%y{X-B3-TraceId:-},P=%X{X-B3-ParentSpanId:-},S=%X{X-B3-SpanId:-}] - %msg%n"/>
+    </properties>
+
+    <Appenders>
+        <RollingRandomAccessFile name="RollingFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/hist/${date:yyyy-MM}/${FILE_NAME}-%d{dd_HH}-%i.log">
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="64 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="100" />
+        </RollingRandomAccessFile>
+
+        <EsAppender name="EsAppender" appName="${APP_NAME}" local_cache_dir="${LOG_HOME}/flume" servers="${sys:ES_SERVER}" >
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+        </EsAppender>
+
+
+        <!--控制台输出所有日志-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT"
+                             onMismatch="DENY" />
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}"/>
+        </Console>
+        <!--Info级别日志输出-->
+        <RollingRandomAccessFile name="InfoFile"
+                                 fileName="${LOG_HOME}/info/${FILE_NAME}-info.log"
+                                 filePattern="${LOG_HOME}/info/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <DefaultRolloverStrategy max="20" />
+        </RollingRandomAccessFile>
+        <!--warn级别日志输出-->
+        <RollingRandomAccessFile name="WarnFile"
+                                 fileName="${LOG_HOME}/warn/${FILE_NAME}-warn.log"
+                                 filePattern="${LOG_HOME}/warn/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingRandomAccessFile>
+
+        <!--Error级别日志输出-->
+        <RollingRandomAccessFile name="ErrorFile"
+                                 fileName="${LOG_HOME}/error/${FILE_NAME}-error.log"
+                                 filePattern="${LOG_HOME}/error/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+    <Loggers>
+        <root level="info">
+            <AppenderRef ref="RollingFile" />
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="InfoFile" />
+            <AppenderRef ref="WarnFile" />
+            <AppenderRef ref="ErrorFile" />
+            <AppenderRef ref="EsAppender" />
+        </root>
+        <logger name="org.springframework" level="WARN">
+        </logger>
+        <Logger name="org.apache.flume" level="WARN" />
+        <logger name="com.wehotel.uni.user" level="INFO">
+        </logger>
+        <logger name="com.wehotel.uni.user.dao" level="INFO">
+        </logger>
+        <logger name="com.wehotel.uni.user.mapper" level="debug">
+        </logger>
+        <logger name="com.netflix" level="WARN">
+        </logger>
+        <logger name="io.github" level="ERROR">
+        </logger>
+        <logger name="io.lettuce" level="ERROR">
+        </logger>
+        <logger name="com.zaxxer" level="ERROR">
+        </logger>
+        <logger name="org.mybatis.spring.SqlSessionUtils" level="ERROR">
+        </logger>
+        <logger name="org.apache.flume" level="ERROR">
+        </logger>
+        <logger name="org.apache.zookeeper" level="ERROR">
+        </logger>
+        <logger name="com.github" level="ERROR">
+        </logger>
+        <logger name="JobPullMachine" level="ERROR">
+        </logger>
+    </Loggers>
+
+</Configuration>

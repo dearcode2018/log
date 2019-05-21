@@ -6,10 +6,6 @@
  */
 package com.hua.util;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.xml.DOMConfigurator;
-
 /**
  * 描述: 
  * @author qye.zheng
@@ -29,7 +25,7 @@ public final class LogUtil {
 	 */
 	public static void log4jInitByDefault() {
 		// 使用默认环境
-		BasicConfigurator.configure();
+		//BasicConfigurator.configure();
 	}
 	
 	/**
@@ -43,7 +39,7 @@ public final class LogUtil {
 		// java项目(非web项目) 获取 bin 类路径
 		final String path = LogUtil.class.getResource(filePath).getPath();
 		// 使用properties配置文件
-		PropertyConfigurator.configure(path);
+		//PropertyConfigurator.configure(path);
 	}
 	
 	/**
@@ -57,7 +53,7 @@ public final class LogUtil {
 		// java项目(非web项目) 获取 bin 类路径
 		final String path = LogUtil.class.getResource(filePath).getPath();
 		// 使用xml 配置文件
-		DOMConfigurator.configure(path);
+		//DOMConfigurator.configure(path);
 	}
 	
 }

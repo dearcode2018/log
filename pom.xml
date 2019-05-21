@@ -12,6 +12,8 @@
 		<!-- 模板 -->
 		<module>log-template</module>		
 		<module>access-log</module>		
+		<module>log4j2</module>
+		<module>log4j2-es</module>
 		<module>jcl</module>		
 		<module>log</module>		
 		<module>logback</module>		

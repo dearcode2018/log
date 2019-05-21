@@ -1,37 +1,36 @@
 /**
-* ApacheLogTest.java
+* Slf4jTest.java
 * 
 * @author qye.zheng
 * 	version 1.0
  */
 package com.hua.test.log;
 
-import org.apache.logging.log4j.Logger;
 import org.junit.Test;
+import org.slf4j.Logger;
 
-import com.hua.log.apache.ApacheBaseLog;
-import com.hua.log.apache.ApacheLog;
+import com.hua.log.slf4j.SlfBaseLog;
+import com.hua.log.slf4j.SlfLog;
 import com.hua.test.BaseTest;
-import com.hua.util.LogUtil;
+import com.hua.util.log.LogUtil;
 
 /**
  * 描述: 
  * @author qye.zheng
- * ApacheLogTest
+ * Slf4jTest
  */
-public class ApacheLogTest extends BaseTest {
+public class Slf4jTest extends BaseTest {
 	
-	public static ApacheLog apacheLog = new ApacheLog();
+	public static SlfLog slfLog = new SlfLog();
 	
-	/* apache commons log */
-	public static Logger log = apacheLog.log;
+	/* slf4j logger */
+	public static Logger log = slfLog.log;
 	
 	static {
 		// 使用指定的配置启动 log
-		LogUtil.log4jInitByProperties(ApacheBaseLog.propertiesPath);
+		LogUtil.log4jInitByProperties(SlfBaseLog.propertiesPath);
 		//LogUtil.log4jInitByDefault();
 	}
-	
 	
 	/**
 	 * 
