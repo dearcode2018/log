@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
 		<common.version>0.0.1</common.version>
-   		<flume-ng-log4j2.version>2.11.1.15</flume-ng-log4j2.version>			
+   		<flume-ng-log4j2.version>1.9.0</flume-ng-log4j2.version>			
 	</properties>
 
 	<dependencies>
@@ -28,7 +28,7 @@
         <!-- Flume -->
         <dependency>
             <groupId>org.apache.flume</groupId>
-            <artifactId>flume-ng-log4j2-appender-with-embedded-agent</artifactId>
+             <artifactId>flume-ng-embedded-agent</artifactId>
             <version>${flume-ng-log4j2.version}</version>
         </dependency>
 

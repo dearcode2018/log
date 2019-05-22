@@ -19,7 +19,7 @@
             <DefaultRolloverStrategy max="100" />
         </RollingRandomAccessFile>
 
-        <EsAppender name="EsAppender" appName="${APP_NAME}" local_cache_dir="${LOG_HOME}/flume" servers="${sys:ES_SERVER}" >
+        <EsAppender name="EsAppender" appName="${APP_NAME}" local_cache_dir="${LOG_HOME}/flume" servers="192.168.5.11:9200" >
             <Filters>
                 <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY" />
             </Filters>
