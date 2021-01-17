@@ -11,17 +11,13 @@
 	<packaging>jar</packaging>
 	<name>logback</name>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
-		<log.version>1.0.0</log.version>
-		<logback.version>1.2.3</logback.version>		
+	
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.hua</groupId>
 			<artifactId>log</artifactId>
-			<version>${log.version}</version>
 			<!-- 当前项目需要用logback的实现，所以需要把log4j的实现给去掉 -->
 			<exclusions>
 				<exclusion>
@@ -42,20 +38,17 @@
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-classic</artifactId>
-		    <version>${logback.version}</version>
 		</dependency>
 
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-core</artifactId>
-		    <version>${logback.version}</version>
 		</dependency>
 	
-	<dependency>
-	    <groupId>ch.qos.logback</groupId>
-	    <artifactId>logback-access</artifactId>
-	    <version>${logback.version}</version>
-	</dependency>	
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-access</artifactId>
+		</dependency>	
 		
 	</dependencies>
 

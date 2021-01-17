@@ -33,6 +33,8 @@
 		<maven.plugin.resources.version>2.7</maven.plugin.resources.version>
 		<maven.plugin.dependency.version>2.10</maven.plugin.dependency.version>
 		<maven.plugin.war.version>3.0</maven.plugin.war.version>
+		<log.version>1.0.0</log.version>
+		<logback.version>1.3.0-alpha5</logback.version>			
 	</properties>  
   
   
@@ -136,5 +138,33 @@
 
 		</plugins>
 	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.hua</groupId>
+				<artifactId>log</artifactId>
+				<version>${log.version}</version>
+			</dependency>
+	
+			<dependency>
+			    <groupId>ch.qos.logback</groupId>
+			    <artifactId>logback-classic</artifactId>
+			    <version>${logback.version}</version>
+			</dependency>
+	
+			<dependency>
+			    <groupId>ch.qos.logback</groupId>
+			    <artifactId>logback-core</artifactId>
+			    <version>${logback.version}</version>
+			</dependency>
+		
+			<dependency>
+			    <groupId>ch.qos.logback</groupId>
+			    <artifactId>logback-access</artifactId>
+			    <version>${logback.version}</version>
+			</dependency>	
+		</dependencies>
+	</dependencyManagement>
 	
 </project>
