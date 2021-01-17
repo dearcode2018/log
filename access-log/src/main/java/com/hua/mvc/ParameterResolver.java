@@ -119,7 +119,7 @@ public class ParameterResolver implements WebArgumentResolver
 							throws IllegalArgumentException
 					{
 						// 根据约定的标准格式,转成日期对象
-						setValue(DateTimeUtil.parseStandardDate(text));
+						//setValue(DateTimeUtil.parseStandardDate(text));
 						//super.setAsText(text);
 					}
 					/**
