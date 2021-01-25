@@ -22,7 +22,6 @@
 		<dependency>
 			<groupId>com.hua</groupId>
 			<artifactId>common</artifactId>
-			<version>${common.version}</version>
 		</dependency>
 
         <!-- Flume -->
