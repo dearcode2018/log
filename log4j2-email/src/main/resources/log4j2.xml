@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- monitorInterval 间隔多少秒刷新配置-而不用重启进程 -->
+<Configuration status="warn" monitorInterval="1800">
+               
+	<!-- 属性定义 -->
+	<properties>
+		<!-- 声明变量 -->
+		<property name="var_name">var_value</property>
+		<property name="LOG_HOME">/data/logs/log4j2</property>
+		<property name="FILE_NAME">app</property>
+		<property name="FILE_EXT">.log</property>
+		<property name="FILE_GZ_EXT">.log.gz</property>		
+		<property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</property>
+		<property name="mailHost" >smtp.163.com</property>
+		<property name="mailPort" >25</property>
+		<property name="mailUsername" >dearzqy@163.com</property>
+		<property name="mailPassowrd" >NROBGOOJUYOKIREJ</property>
+		<property name="mailFrom">dearzqy@163.com</property>	
+		<property name="mailTo">dearzqy2010@qq.com</property>	
+		<property name="mailBufferSize">20</property>	
+		<property name="mailSubject">Warn from log4j2</property>			
+	</properties>
+
+	<!-- 输出者 -->
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<!-- 格式布局 -->
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+		
+			<!-- 多个fileName引用同一个文件会构造失败，一般只存在一个文件类型的appender -->
+<!-- 		<File name="File" fileName="${LOG_HOME}/${FILE_NAME}${FILE_EXT}">
+			<PatternLayout pattern="${PATTERN}" />
+		</File> -->
+		
+		<!-- fileName: 正在写日志的，filePattern: 当发生Rolling时，
+		文件的转移和重命名规则
+		.gz 表示压缩为gz文件，减少文件大小
+		 -->
+		<RollingRandomAccessFile name="RollingRandomAccessFile" 
+			fileName="${LOG_HOME}/${FILE_NAME}${FILE_EXT}" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH-mm}-%i${FILE_GZ_EXT}">
+		<PatternLayout pattern="${PATTERN}" />
+			<Policies>
+				<!-- filePattern 文件名是 HH-mm 表示一分钟生成一个文件，HH则表示1小时
+					因此这个interval的单位是不固定的
+				  -->
+				<TimeBasedTriggeringPolicy interval="5" />
+				<SizeBasedTriggeringPolicy size="10 KB" />
+			</Policies>
+			<!-- 最多保存的文件个数 -->
+			<DefaultRolloverStrategy max="10" />
+		</RollingRandomAccessFile>
+		
+		<!-- 异步记录 -->
+		<Async name="Async">
+			<AppenderRef ref = "RollingRandomAccessFile" />			
+		</Async>
+		
+		<SMTP name="Email" subject="${mailSubject}" from="${mailFrom}" 
+			to="${mailTo}" smtpHost="${mailHost}" smtpPort="${mailPort}" 
+			smtpUsername="${mailUsername}" smtpPassword="${mailPassowrd}" 
+			bufferSize = "${mailBufferSize}"></SMTP>
+		
+		<Async name="AsyncEmail">
+			<AppenderRef ref="Email" />
+		</Async>
+		
+	</Appenders>
+	
+	<!-- 日志 -->
+	<Loggers>
+		<!-- Root -->
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+		</Root>
+		
+		<!-- 自定义名称的Logger  additivity为false表示不上升的Root Logger
+			additivity默认是true，一般须显式配置关闭
+		-->
+		<Logger name ="someLogger" level="warn" additivity="false">
+			<!-- 可配置多个AppenderRef -->
+			<AppenderRef ref = "Console" />
+		<!-- 	<AppenderRef ref = "File" />	 -->
+			 <AppenderRef ref = "RollingRandomAccessFile" />
+			<AppenderRef ref="Async" />							
+		</Logger>
+		
+		<!-- 发送email比较慢，可以作成异步的appender -->
+		<Logger name="emailLogger" level="warn" additivity="false">
+			<AppenderRef ref = "Console" />		
+			<AppenderRef ref="AsyncEmail" />
+		</Logger>
+		
+		
+		
+		<!-- 设置包日志级别 -->
+<!-- 		<Logger name="com.hua.test" level="trace" /> -->
+	</Loggers>
+</Configuration>

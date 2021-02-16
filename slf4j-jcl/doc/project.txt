@@ -1,0 +1,41 @@
+【项目信息】
+项目名称 : slf4j
+中文名称 : 日志
+项目版本 : version 1.0
+
+主要技术 : simple logging facade for java 是一个日志接口，可以使用log4j / AvalonLogKit 作为实现.
+
+项目描述 : 
+
+项目备注 : 
+
+【项目规划】
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

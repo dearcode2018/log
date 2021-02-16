@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- scan=true设置文件发生改变将会自动加载 scanPeriod设置监测配置文件是否有修改的时间间隔，若没有给出单位则默认为毫秒，当scan=true时，此属性生效， 
+	默认为一分钟. debug=true设置打印logback内部日志信息,实时查看logback运行状态，默认为false -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+	<!-- 声明属性，可以被后面的logger上下通过${}引用变量 -->
+	<!--定义日志输出目录 -->
+	<property name="LOG_HOME" value="/data/logs/logback" />
+	<!--定义日志输出目录 -->
+	<property name="FILE_NAME" value="app" />
+	<property name="FILE_EXT" value=".log" />
+	<property name="FILE_GZ_EXT" value=".log.gz" />
+	<property name="PATTERN"
+		value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+	<!-- 获取时间戳字符串 key:设置此时间戳的名称，datePattern: 设置当前日期字符串的格式 -->
+	<timestamp key="df_yyyy_MM_dd" datePattern="yyyy-MM-dd" />
+	<timestamp key="df_yyyyMMdd" datePattern="yyyyMMdd'T'HHmmss" />
+
+	<!-- 上下文名称，默认为default，每个logger都关联到logger上下文 -->
+	<contextName>logback_00_</contextName>
+
+	<!-- 0-多个，该组件负责写日志, name:指定appender的名称，class指定appender的全限定名 -->
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 日志格式化 -->
+		<encoder>
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+		<!-- System.out(默认) 或 System.err -->
+		<target>System.out</target>
+	</appender>
+
+	<!-- 0-多个，该组件负责写日志, name:指定appender的名称，class指定appender的全限定名 -->
+	<appender name="File" class="ch.qos.logback.core.FileAppender">
+		<!-- 被写入的文件，绝对路径或相对路径 -->
+		<file>${LOG_HOME}/${FILE_NAME}${FILE_EXT}</file>
+		<!-- true-追加到文件末尾，false-清空现存文件 ，默认是true -->
+		<append>true</append>
+		<!-- 日志格式化 -->
+		<encoder>
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${PATTERN}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<file>${LOG_HOME}/${FILE_NAME}${FILE_EXT}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i${FILE_GZ_EXT}
+			</fileNamePattern>
+			<maxFileSize>1MB</maxFileSize>
+			<!-- 根据日志文件按天回滚，保存时间为30天，30天之前的都将被清理掉 -->
+			<maxHistory>30</maxHistory>
+			<!-- <totalSizeCap>1MB</totalSizeCap> -->
+		</rollingPolicy>
+	</appender>
+
+	<!-- 最多一个，root是所有logger上级 -->
+	<root level="DEBUG">
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFile" />
+	</root>
+
+	<!-- 0-多个 name设置某一个包或具体类的日志打印级别 以及指定appender level设置级别 ch.qos.logback.classic.Level 
+		TRACE DEBUG INFO WARN ERROR ALL OFF addtivity设置是否向上级logger传递打印信息，默认是true -->
+	<logger name="someLogger" level="INFO" addtivity="false">
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFile" />
+	</logger>
+
+</configuration>

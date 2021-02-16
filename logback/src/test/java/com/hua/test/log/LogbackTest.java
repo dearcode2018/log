@@ -18,12 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
-
-
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +29,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.hua.test.BaseTest;
 
@@ -46,8 +46,34 @@ import com.hua.test.BaseTest;
 //@Tags({@Tag("测试类标签1"), @Tag("测试类标签2")})
 public final class LogbackTest extends BaseTest {
 
+	private Logger log = LoggerFactory.getLogger(getClass().getName());
 	
+	/**
+	 * 
+	 * 描述: 
+	 * @author qye.zheng
+	 * 
+	 */
+	//@DisplayName("test")
+	@Test
+	public void testLogback() {
+		try {
+			Logger log = LoggerFactory.getLogger("someLogger");
+			
+			Throwable t = new RuntimeException("构造异常");
+			/**
+			 * 异常作为最后一个参数，不用书写 {} 占位符
+			 */
+			int limit = 100;
+			for (int i = 0; i < limit; i++) {
+				log.warn("a = {}, b = {}, exception: ", "value1", 2, t);
+			}
 	
+			//System.out.println(log);
+		} catch (Exception e) {
+			log.error("test =====> ", e);
+		}
+	}
 	
 	/**
 	 * 

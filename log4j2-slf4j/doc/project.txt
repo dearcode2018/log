@@ -1,0 +1,55 @@
+【项目信息】
+项目名称 : log4j2
+中文名称 : 日志
+项目版本 : version 1.0
+
+主要技术 :  apache logging log4j2
+
+项目描述 : 
+
+项目备注 : 
+
+【项目规划】
+
+1)
+
+2) 配置文件位置
+默认: classpath:log4j2.xml
+自定义位置方式1: -Dlog4j.configurationFile=/path/log4j2.xml
+自定义位置方式2: log4j2.component.properties 中 log4j.configurationFile=/path/log4j2.xml
+3) API方式修改记录器级别
+// org.apache.logging.log4j.core.config.Configurator;
+Configurator.setLevel("com.example.Foo", Level.DEBUG);
+// You can also set the root logger:
+Configurator.setRootLevel(Level.DEBUG);
+
+4)
+
+5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

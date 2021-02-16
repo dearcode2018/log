@@ -7,6 +7,8 @@
  */
 package com.hua.test;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,6 +29,7 @@ import com.hua.log.BaseLog;
 @DisplayName("BaseTest")
 public class BaseTest extends BaseLog {
 	
+	protected final Logger log = LogManager.getLogger(this.getClass().getName());
 	
 	/**
 	 * 

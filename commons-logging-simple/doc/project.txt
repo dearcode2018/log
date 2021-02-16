@@ -1,0 +1,43 @@
+【项目信息】
+项目名称 : jcl
+中文名称 : 日志
+项目版本 : version 1.0
+
+主要技术 : jakarta commons log
+
+apache commons logging
+
+项目描述 : jakarta commons log 是一个日志接口，可以使用log4j / AvalonLogKit 作为实现.
+
+项目备注 : 
+
+【项目规划】
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
