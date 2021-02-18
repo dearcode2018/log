@@ -11,21 +11,21 @@
 	<modules>
 		<!-- 模板 -->
 		<module>access-log</module>		
+		<module>commons-logging</module>	
+		<module>commons-logging-jul</module>
+		<module>commons-logging-log4j</module>	
+		<module>jul</module>
+		<module>jul-slf4j</module>
 		<module>log4j2</module>
 		<module>log4j2-slf4j</module>
 		<module>log4j2-jul</module>
 		<module>log4j2-email</module>
-		<module>commons-logging</module>	
-		<module>commons-logging-jul</module>
-		<module>commons-logging-log4j</module>	
-		<module>commons-logging-simple</module>
 		<module>log-core</module>		
 		<module>logback</module>		
 		<module>slf4j</module>
 		<module>slf4j-jcl</module>
 		<module>slf4j-jul</module>
 		<module>slf4j-logback</module>
-		<module>util-logging</module>
 	</modules>
  
 	<!-- 公共属性 -->
@@ -45,7 +45,7 @@
 		<logging.log4j.version>2.14.0</logging.log4j.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<javax-mail.version>1.6.2</javax-mail.version>
-		<slf4j.version>2.0.0-alpha1</slf4j.version>					
+		<slf4j.version>2.0.0-alpha1</slf4j.version>
 	</properties>  
   
 	<dependencyManagement>
@@ -118,9 +118,17 @@
 		   		<version>${slf4j.version}</version>		    
 			</dependency>	
 			
+			<!-- JUL的Logger代理到slf4j的Logger -->
 			<dependency>
 			    <groupId>org.slf4j</groupId>
 			    <artifactId>jul-to-slf4j</artifactId>
+		   		<version>${slf4j.version}</version>		    
+			</dependency>	
+
+			<!-- JCL的Logger代理到slf4j的Logger -->
+			<dependency>
+			    <groupId>org.slf4j</groupId>
+			    <artifactId>jcl-over-slf4j </artifactId>
 		   		<version>${slf4j.version}</version>		    
 			</dependency>	
 					    					

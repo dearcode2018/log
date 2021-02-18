@@ -1,6 +1,6 @@
 /**
  * 描述: 
- * CommonsLogTest.java
+ * Slf4jJulTest.java
  * 
  * @author qye.zheng
  *  version 1.0
@@ -19,10 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
@@ -35,6 +31,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.hua.test.BaseTest;
 
@@ -43,14 +41,14 @@ import com.hua.test.BaseTest;
  * 描述: 
  * 
  * @author qye.zheng
- * CommonsLogTest
+ * Slf4jJulTest
  */
 //@DisplayName("测试类名称")
 //@Tag("测试类标签")
 //@Tags({@Tag("测试类标签1"), @Tag("测试类标签2")})
-public final class CommonsLogTest extends BaseTest {
+public final class Slf4jJulTest extends BaseTest {
 
-	private Log log = LogFactory.getLog(getClass().getName());
+	private Logger log = LoggerFactory.getLogger(getClass().getName());
 	
 	/**
 	 * 
@@ -60,13 +58,43 @@ public final class CommonsLogTest extends BaseTest {
 	 */
 	//@DisplayName("test")
 	@Test
-	public void testCommonLog() {
+	public void testSlf4jJul() {
 		try {
+			//Throwable t = new RuntimeException("构造异常");
 			/**
-			 * commons-log 使用 org.apache.commons.logging.impl.SimpleLog
+			 * 异常作为最后一个参数，不用书写 {} 占位符
 			 */
+			// 正确写法
+			log.info("a = {}, b = {}, exception: ", "value1", 2);
 			
+			// 错误写法1
+			//log.debug("a = {}, b = {}, exception: ", "value1", t, 2);
 			
+			// exception:{} 调用的是对象的toString()
+			// 错误写法2
+			//log.debug("a = {}, b = {}, exception: {}", "value1", 2, t);
+			//System.out.println(t.toString());
+			
+		} catch (Exception e) {
+			log.error("test =====> ", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * 描述: 
+	 * @author qye.zheng
+	 * 
+	 */
+	//@DisplayName("test")
+	@Test
+	public void testFluentApi() {
+		try {
+			
+			log.atDebug().addArgument("value1").addArgument("value2").log("Temperature set to {}. Old temperature was {}.");
+			
+			log.atInfo().addArgument("value1").addArgument("value2").log("Temperature set to {}. Old temperature was {}.");
+		
 		} catch (Exception e) {
 			log.error("test =====> ", e);
 		}
@@ -82,7 +110,6 @@ public final class CommonsLogTest extends BaseTest {
 	@Test
 	public void test() {
 		try {
-			
 			
 		} catch (Exception e) {
 			log.error("test =====> ", e);

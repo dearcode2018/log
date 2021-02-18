@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
-import org.apache.logging.log4j.jul.LogManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -60,6 +59,10 @@ public final class Log4j2JulTest extends BaseTest {
 	@Test
 	public void testLog4j2Jul() {
 		try {
+			/*
+			 * 使用JUL Logger的时候，底层用的是 log4j2
+			 * log4j-jul 做了一个桥接
+			 */
 			// 在beforeMethod()方法执行
 			//System.setProperty("java.util.logging.manager", "org.apache.logging.log4j.jul.LogManager");
 			Logger log = Logger.getLogger(getClass().getName());

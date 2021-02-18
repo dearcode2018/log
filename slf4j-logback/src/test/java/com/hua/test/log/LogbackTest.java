@@ -64,7 +64,7 @@ public final class LogbackTest extends BaseTest {
 			/**
 			 * 异常作为最后一个参数，不用书写 {} 占位符
 			 */
-			int limit = 500;
+			int limit = 50;
 			for (int i = 0; i < limit; i++) {
 				log.warn("a = {}, b = {}, exception: ", "value1", 2, t);
 			}

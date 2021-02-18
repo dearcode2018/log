@@ -6,8 +6,8 @@
  */
 package com.hua.log;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 描述: 
@@ -16,13 +16,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class BaseLog {
 	
-	private static final String FILE_PATH = "/conf/properties/log4j.properties";
-	
 	/* apache commons log */
-	protected final Logger log = LogManager.getLogger(this.getClass().getName());
-	
-	static {
-		// 初始化 log4j 环境
-		//PropertyConfigurator.configure(ClassPathUtil.getClassSubpath(FILE_PATH));
-	}
+	protected final Log log = LogFactory.getLog(getClass().getName());
+
 }

@@ -9,8 +9,8 @@ package com.hua.entity;
 
 import java.io.Serializable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 描述: 
@@ -24,7 +24,7 @@ public class BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/* apache commons log */
-	protected final Logger log = LogManager.getLogger(this.getClass().getName());
+	protected final Log log = LogFactory.getLog(getClass().getName());
 	
 	/* 对象唯一id */
 	private Long oid;

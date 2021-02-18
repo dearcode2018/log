@@ -1,6 +1,6 @@
 /**
  * 描述: 
- * CommonsLogTest.java
+ * JulSlf4jTest.java
  * 
  * @author qye.zheng
  *  version 1.0
@@ -18,16 +18,18 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
-
+import java.io.File;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +37,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.hua.test.BaseTest;
 
@@ -43,14 +46,15 @@ import com.hua.test.BaseTest;
  * 描述: 
  * 
  * @author qye.zheng
- * CommonsLogTest
+ * JulSlf4jTest
  */
 //@DisplayName("测试类名称")
 //@Tag("测试类标签")
 //@Tags({@Tag("测试类标签1"), @Tag("测试类标签2")})
-public final class CommonsLogTest extends BaseTest {
+public final class JulSlf4jTest extends BaseTest {
 
-	private Log log = LogFactory.getLog(getClass().getName());
+	// 默认INFO级别
+	protected Logger logger = Logger.getLogger(getClass().getName());
 	
 	/**
 	 * 
@@ -60,15 +64,87 @@ public final class CommonsLogTest extends BaseTest {
 	 */
 	//@DisplayName("test")
 	@Test
-	public void testCommonLog() {
+	public void testInfo() {
 		try {
-			/**
-			 * commons-log 使用 org.apache.commons.logging.impl.SimpleLog
-			 */
-			
-			
+			// 放在beforeMethod中执行
+			//SLF4JBridgeHandler.install();
+			//logger.setLevel(Level.WARNING);
+			//logger.log(Level.INFO, "提示信息 info level");
+			// 等价
+			logger.info("提示信息 info level");
 		} catch (Exception e) {
-			log.error("test =====> ", e);
+			logger.log(Level.SEVERE, "test =====> ", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * 描述: 
+	 * @author qye.zheng
+	 * 
+	 */
+	//@DisplayName("test")
+	@Test
+	public void testCloseConsole() {
+		try {
+			// 关闭控制台
+			ConsoleHandler hanlder = new ConsoleHandler();
+			hanlder.setLevel(Level.OFF);
+			logger.addHandler(hanlder);
+			//logger.setLevel(Level.WARNING);
+			logger.log(Level.INFO, "提示信息 info level");
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "test =====> ", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * 描述: 
+	 * @author qye.zheng
+	 * 
+	 */
+	//@DisplayName("test")
+	@Test
+	public void testFileHandler() {
+		try {
+			FileHandler handler = new FileHandler(System.getProperty("user.dir") + File.separator + "file.log");
+			//hanlder.setLevel(Level.OFF);
+			//handler.setLevel(Level.WARNING);
+			logger.addHandler(handler);
+			//logger.setLevel(Level.WARNING);
+			logger.log(Level.INFO, "提示信息 info level");
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "test =====> ", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * 描述: 
+	 * @author qye.zheng
+	 * 
+	 */
+	//@DisplayName("test")
+	@Test
+	public void testFormatter() {
+		try {
+			FileHandler handler = new FileHandler(System.getProperty("user.dir") + File.separator + "file.log");
+			//hanlder.setLevel(Level.OFF);
+			//handler.setLevel(Level.WARNING);
+			handler.setFormatter(new Formatter() {
+
+				@Override
+				public String format(LogRecord record) {
+					return record.getLevel() + ":" + record.getMessage();
+				}
+				
+			});
+			logger.addHandler(handler);
+			//logger.setLevel(Level.WARNING);
+			logger.log(Level.INFO, "提示信息 info level");
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "test =====> ", e);
 		}
 	}
 	
@@ -82,10 +158,9 @@ public final class CommonsLogTest extends BaseTest {
 	@Test
 	public void test() {
 		try {
-			
-			
+
 		} catch (Exception e) {
-			log.error("test =====> ", e);
+			logger.log(Level.SEVERE, "test =====> ", e);
 		}
 	}
 	
@@ -102,7 +177,7 @@ public final class CommonsLogTest extends BaseTest {
 			
 			
 		} catch (Exception e) {
-			log.error("testTemp=====> ", e);
+			logger.log(Level.SEVERE, "testTemp =====> ", e);
 		}
 	}
 	
@@ -119,7 +194,7 @@ public final class CommonsLogTest extends BaseTest {
 			
 			
 		} catch (Exception e) {
-			log.error("testCommon =====> ", e);
+			logger.log(Level.SEVERE, "testCommon =====> ", e);
 		}
 	}
 	
@@ -136,7 +211,7 @@ public final class CommonsLogTest extends BaseTest {
 			
 			
 		} catch (Exception e) {
-			log.error("testSimple =====> ", e);
+			logger.log(Level.SEVERE, "testSimple =====> ", e);
 		}
 	}
 	
@@ -153,7 +228,7 @@ public final class CommonsLogTest extends BaseTest {
 			
 			
 		} catch (Exception e) {
-			log.error("testBase =====> ", e);
+			logger.log(Level.SEVERE, "testBase =====> ", e);
 		}
 	}
 	
@@ -168,6 +243,7 @@ public final class CommonsLogTest extends BaseTest {
 	@BeforeEach
 	public void beforeMethod() {
 		System.out.println("beforeMethod()");
+		SLF4JBridgeHandler.install();
 	}
 	
 	/**
